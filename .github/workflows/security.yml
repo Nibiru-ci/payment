@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   security:
-    uses: MON-ORG/security-workflows/.github/workflows/security-pipeline.yml@v1
+    uses: Nibiru-ci/security-workflows/.github/workflows/security-pipeline.yml@v1
     permissions:
       contents: read
       packages: read
