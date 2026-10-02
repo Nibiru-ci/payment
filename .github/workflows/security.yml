@@ -1,0 +1,50 @@
+# =============================================================================
+#  À copier dans chaque projet : .github/workflows/security.yml
+#  Seule la ligne "uses:" (nom de votre organisation) et la section "with:"
+#  sont à adapter.
+# =============================================================================
+name: Security & Quality
+
+on:
+  push:
+    branches: [ main ]          # adaptez si votre branche principale s'appelle autrement
+    tags: [ 'v*' ]              # vérifie aussi chaque version publiée (v1.0.0, v2.3.1...)
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '30 2 * * 1'        # scan complet chaque lundi à 02:30 UTC
+  workflow_dispatch:            # permet de lancer à la main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  security:
+    uses: Nibiru-ci/security-workflows/.github/workflows/security-pipeline.yml@v1
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+    with:
+      # Règles Semgrep adaptées au langage du projet (séparées par des espaces)
+      #   JavaScript/TypeScript : "p/default p/javascript p/typescript"
+      #   Python                : "p/default p/python"
+      #   Java                  : "p/default p/java"
+      #   Go                    : "p/default p/golang"
+      semgrep-config: "p/default"
+
+      # Docker : rien à régler. Si le projet contient un Dockerfile, les règles
+      # Docker de Semgrep sont ajoutées automatiquement (sinon elles sont ignorées).
+
+      # Lint : laissez vide pour Super-Linter (il détecte tout seul les langages),
+      # ou imposez la commande du projet :
+      # lint-command: "npm ci && npm run lint"
+
+      # Pour désactiver un contrôle sur ce projet :
+      # enable-lint: false
+      # enable-sast: false
+      # enable-secret-scan: false
