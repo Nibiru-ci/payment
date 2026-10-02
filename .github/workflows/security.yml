@@ -7,13 +7,12 @@ name: Security & Quality
 
 on:
   push:
-    branches: [ main ]          # adaptez si votre branche principale s'appelle autrement
+    branches: [ main, master ]  # branche principale (main ou master)
     tags: [ 'v*' ]              # vérifie aussi chaque version publiée (v1.0.0, v2.3.1...)
-  pull_request:
-    branches: [ main ]
+  pull_request:                 # toute Pull Request, quelle que soit la branche visée
   schedule:
     - cron: '30 2 * * 1'        # scan complet chaque lundi à 02:30 UTC
-  workflow_dispatch:            # permet de lancer à la main
+  workflow_dispatch:            # bouton "Run workflow" (Actions) une fois le fichier sur la branche principale
 
 permissions:
   contents: read
@@ -24,7 +23,7 @@ concurrency:
 
 jobs:
   security:
-    uses: Nibiru-ci/security-workflows/.github/workflows/security-pipeline.yml@v1
+    uses: MON-ORG/security-workflows/.github/workflows/security-pipeline.yml@v1
     permissions:
       contents: read
       packages: read
