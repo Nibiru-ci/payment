@@ -1,0 +1,64 @@
+# =============================================================================
+#  À copier dans chaque projet : .github/dependabot.yml
+#  Dependabot surveille les bibliothèques du projet et propose des mises à jour.
+#  Gardez le bloc "github-actions", puis décommentez ce qui correspond au projet.
+# =============================================================================
+version: 2
+updates:
+  # --- Toujours présent : met à jour les actions utilisées par les workflows --
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels: ["dependencies"]
+    commit-message:
+      prefix: "ci"
+
+  # --- Node.js (npm / yarn / pnpm) --------------------------------------------
+  # - package-ecosystem: "npm"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+  #   labels: ["dependencies"]
+  #   groups:
+  #     minor-patch:
+  #       update-types: ["minor", "patch"]
+
+  # --- Python (pip / poetry) --------------------------------------------------
+  # - package-ecosystem: "pip"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+  #   labels: ["dependencies"]
+
+  # --- Java (Maven ou Gradle) -------------------------------------------------
+  # - package-ecosystem: "maven"      # ou "gradle"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+  #   labels: ["dependencies"]
+
+  # --- Go ---------------------------------------------------------------------
+  # - package-ecosystem: "gomod"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+
+  # --- .NET -------------------------------------------------------------------
+  # - package-ecosystem: "nuget"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+
+  # --- PHP --------------------------------------------------------------------
+  # - package-ecosystem: "composer"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+
+  # --- Docker : À DÉCOMMENTER si le projet contient un Dockerfile -------------
+  #     (suit l'image de base du "FROM". Une entrée par dossier contenant un
+  #      Dockerfile : directory: "/" puis par exemple directory: "/api")
+  # - package-ecosystem: "docker"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
+
+  # --- Terraform --------------------------------------------------------------
+  # - package-ecosystem: "terraform"
+  #   directory: "/"
+  #   schedule: { interval: "weekly" }
